@@ -53,13 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'alamat' => $alamat,
             'no_hp' => $no_hp,
             'email' => $email,
+            'username' => $username,
+            'password' => $password,
         );
         $abc->ubah_pelanggan($data2);
     } elseif ($aksi == 'hapus') {
         $abc->hapus_pelanggan($id_pelanggan);
     }
 
-    unset($postdata, $data, $data2, $id_pelanggan, $nama, $alamat, $no_hp, $email, $aksi, $abc);
+    unset($postdata, $data, $data2, $id_pelanggan, $nama, $alamat, $no_hp, $email, $username, $password, $aksi, $abc);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_GET['aksi'] == 'tampil' and (isset($_GET['id_pelanggan']))) {
         // Kode yang sudah ada untuk menampilkan semua data pelanggan atau berdasarkan ID pelanggan

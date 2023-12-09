@@ -198,8 +198,8 @@ class Database
 
    public function ubah_pelanggan($data)
    {
-      $query = $this->conn->prepare("UPDATE pelanggan set nama=?, alamat=?, no_hp=?, email=? WHERE id_pelanggan=?");
-      $query->execute(array($data['nama'], $data['alamat'], $data['no_hp'], $data['email'], $data['id_pelanggan']));
+      $query = $this->conn->prepare("UPDATE pelanggan set nama=?, alamat=?, no_hp=?, email=?, username=?, password=? WHERE id_pelanggan=?");
+      $query->execute(array($data['nama'], $data['alamat'], $data['no_hp'], $data['email'], $data['username'], $data['password'], $data['id_pelanggan']));
       $query->closeCursor();
       unset($data);
    }
