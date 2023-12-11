@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $data->email;
     $username = $data->username;
     $password = $data->password;
+    $role = $data->role;
     $aksi = $data->aksi;
     if ($aksi == 'tambah') {
         $data2 = array(
@@ -44,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'email' => $email,
             'username' => $username,
             'password' => $password,
+            'role' => $role,
         );
         $abc->tambah_pelanggan($data2);
     } elseif ($aksi == 'ubah') {

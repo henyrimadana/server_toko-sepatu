@@ -57,13 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     unset($postdata, $data, $data2, $id_transaksi, $id_produk, $id_pelanggan, $tanggal, $jumlah, $aksi, $abc);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (($_GET['aksi'] == 'tampil') and (isset($_GET['id_transaksi']))) {
+        // Kode yang sudah ada untuk menampilkan semua data pelanggan atau berdasarkan ID pelanggan
         $id_transaksi = filter($_GET['id_transaksi']);
         $data = $abc->tampil_transaksi($id_transaksi);
+        echo json_encode($data);
+    } elseif ($_GET['aksi'] == 'tampil_by_pelanggan' and (isset($_GET['id_pelanggan']))) {
+        // Menampilkan informasi username berdasarkan nama pengguna
+        $id_pelanggan = filter($_GET['id_pelanggan']);
+        $data = $abc->tampil_transaksi_by_pelanggan($id_pelanggan);
         echo json_encode($data);
     } else {
         $data = $abc->tampil_semua_transaksi();
         echo json_encode($data);
     }
-    unset($postdata, $data, $id_transaksi, $abc);
+    unset($postdata, $data, $id_transaksi, $id_pelanggan, $abc);
 }
-?>

@@ -60,7 +60,7 @@ class Database
 
    public function tampil_semua_transaksi()
    {
-      $query = $this->conn->prepare("SELECT t.id_transaksi, p.nama_produk, l.nama, t.tanggal, t.jumlah FROM transaksi t JOIN produk p ON t.id_produk=p.id_produk JOIN pelanggan l ON t.id_pelanggan=l.id_pelanggan ORDER BY id_transaksi");
+      $query = $this->conn->prepare("SELECT t.id_transaksi, p.*, l.nama, t.tanggal, t.jumlah FROM transaksi t JOIN produk p ON t.id_produk=p.id_produk JOIN pelanggan l ON t.id_pelanggan=l.id_pelanggan ORDER BY id_transaksi");
       $query->execute();
       $data = $query->fetchAll(PDO::FETCH_ASSOC);
       return $data;
@@ -122,7 +122,7 @@ class Database
 
    public function tampil_transaksi($id_transaksi)
    {
-      $query = $this->conn->prepare("SELECT id_transaksi, id_produk, id_pelanggan, tanggal, jumlah FROM transaksi WHERE id_transaksi=?");
+      $query = $this->conn->prepare("SELECT t.id_transaksi, t.id_produk, t.id_pelanggan, p.*, l.nama, t.tanggal, t.jumlah  FROM transaksi t JOIN produk p ON t.id_produk=p.id_produk JOIN pelanggan l ON t.id_pelanggan=l.id_pelanggan ORDER BY id_transaksi");
       $query->execute(array($id_transaksi));
       $data = $query->fetch(PDO::FETCH_ASSOC);
       return $data;
@@ -130,8 +130,15 @@ class Database
       // unset($id_transaksi, $data);
    }
 
-
-
+   public function tampil_transaksi_by_pelanggan($id_pelanggan)
+   {
+      $query = $this->conn->prepare("SELECT t.id_transaksi, t.id_produk, t.id_pelanggan, p.*, l.nama, t.tanggal, t.jumlah FROM transaksi t JOIN produk p ON t.id_produk=p.id_produk JOIN pelanggan l ON t.id_pelanggan=l.id_pelanggan WHERE t.id_pelanggan = ?");
+      $query->execute(array($id_pelanggan));
+      $data = $query->fetchAll(PDO::FETCH_ASSOC);
+      return $data;
+      // $query->closeCursor();
+      // unset($id_pelanggan, $data);
+   }
 
    // FUNGSI UNTUK TAMBAH DATA PADA TABEL 
    public function tambah_produk($data)
@@ -153,8 +160,8 @@ class Database
 
    public function tambah_pelanggan($data)
    {
-      $query = $this->conn->prepare("INSERT IGNORE INTO pelanggan (id_pelanggan, nama, alamat, no_hp, email, username, password) VALUES (?,?,?,?,?,?,?)");
-      $query->execute(array($data['id_pelanggan'], $data['nama'], $data['alamat'], $data['no_hp'], $data['email'], $data['username'], $data['password']));
+      $query = $this->conn->prepare("INSERT IGNORE INTO pelanggan (id_pelanggan, nama, alamat, no_hp, email, username, password, role) VALUES (?,?,?,?,?,?,?,?)");
+      $query->execute(array($data['id_pelanggan'], $data['nama'], $data['alamat'], $data['no_hp'], $data['email'], $data['username'], $data['password'], $data['role']));
       // $query->closeCursor();
       // unset($data);
    }
@@ -315,4 +322,3 @@ class Database
       return $data;
    }
 }
-
